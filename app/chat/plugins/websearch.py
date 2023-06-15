@@ -15,7 +15,11 @@ class WebSearchPlugin(PluginInterface):
         return "websearch"
     
     def get_description(self) -> str:
-        return "Executes a web search for the given query and returns a list of snipptets of matching text from top 10 pages"
+        return """
+        Executes a web search for the given query
+        and returns a list of snipptets of matching
+        text from top 10 pages
+        """
     
 
     def get_parameters(self) -> Dict:
@@ -51,12 +55,15 @@ class WebSearchPlugin(PluginInterface):
             "q": kwargs["q"]
         }
 
-        response = requests.get(BRAVE_API_URL, headers=headers, params=params)
+        response = requests.get(BRAVE_API_URL,
+                                headers=headers,
+                                params=params)
 
         if response.status_code == 200:
             results = response.json()['web']['results']
-            urls = [r['description'] for r in results]
-            return {"web_search_results": urls}
+            snippets = [r['description'] for r in results]
+            return {"web_search_results": snippets}
         else:
-            return {"error": f"Request failed with status code: {response.status_code}"}
+            return {"error":
+                    f"Request failed with status code: {response.status_code}"}
         
