@@ -68,6 +68,7 @@
 
     <script>
         const conversationData = {{ conversation|tojson}};
+        console.log(conversationData)
 
         const messageList = document.getElementById("messageList");
         const messageInput = document.getElementById("messageInput");
@@ -93,11 +94,11 @@
             const listItem = document.createElement("li");
             const senderName = document.createElement("div");
             senderName.className = "sender-name";
-            senderName.innerText = item.sender;
+            senderName.innerText = item.role;
 
             const messageContent = document.createElement("div");
             messageContent.className = "message-content";
-            messageContent.innerText = item.message;
+            messageContent.innerText = item.content;
 
             listItem.appendChild(senderName);
             listItem.appendChild(messageContent);
@@ -123,7 +124,7 @@
             .then(response => response.json())
             .then(data => {
               const responseMessage = data.message;
-              renderMessage('Jane', responseMessage);
+              renderMessage('ChatGPT', responseMessage);
             })
             .catch(error => {
               console.error('Error:', error);
