@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Chat App</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css"
+    />
+    <style>
+      .chat-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: 20px;
+      }
+
+      .message-list {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .message-list li {
+        margin-bottom: 10px;
+      }
+
+      .message-list .sender-name {
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+
+      .message-list .message-content {
+        background-color: #f6f6f6;
+        padding: 10px;
+        border-radius: 8px;
+      }
+
+      .input-box {
+        display: flex;
+        margin-top: 20px;
+      }
+
+      .input-box input[type="text"] {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        margin-right: 10px;
+      }
+
+      .input-box input[type="submit"] {
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="chat-container">
+      <h2>Chat App</h2>
+      <ul class="message-list" id="messageList"></ul>
+      <div class="input-box">
+        <input type="text" id="messageInput" placeholder="Type your message" />
+        <input type="submit" value="Send" id="sendButton" />
+      </div>
+    </div>
+
+    <script>
+        const conversationData = {{ conversation|tojson}};
+
+        const messageList = document.getElementById("messageList");
+        const messageInput = document.getElementById("messageInput");
+        const sendButton = document.getElementById("sendButton");
+
+        function renderMessage(sender, message) {
+          const listItem = document.createElement('li');
+          const senderName = document.createElement('div');
+          senderName.className = 'sender-name';
+          senderName.innerText = sender;
+
+          const messageContent = document.createElement('div');
+          messageContent.className = 'message-content';
+          messageContent.innerText = message;
+
+          listItem.appendChild(senderName);
+          listItem.appendChild(messageContent);
+          messageList.appendChild(listItem);
+        }
+        // Render initial conversation data
+        function renderConversation() {
+          conversationData.forEach((item) => {
+            const listItem = document.createElement("li");
+            const senderName = document.createElement("div");
+            senderName.className = "sender-name";
+            senderName.innerText = item.sender;
+
+            const messageContent = document.createElement("div");
+            messageContent.className = "message-content";
+            messageContent.innerText = item.message;
+
+            listItem.appendChild(senderName);
+            listItem.appendChild(messageContent);
+            messageList.appendChild(listItem);
+          });
+        }
+
+        // Handle message submission
+        function submitMessage() {
+        const message = messageInput.value.trim();
+        if (message !== '') {
+          renderMessage('You', message);
+          messageInput.value = '';
+
+          // Simulate backend API call
+          fetch('/chat', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ message })
+          })
+            .then(response => response.json())
+            .then(data => {
+              const responseMessage = data.message;
+              renderMessage('Jane', responseMessage);
+            })
+            .catch(error => {
+              console.error('Error:', error);
+            });
+        }
+      }
+
+        // Bind event listeners
+        sendButton.addEventListener("click", submitMessage);
+        messageInput.addEventListener("keydown", (event) => {
+          if (event.keyCode === 13) {
+            event.preventDefault();
+            submitMessage();
+          }
+        });
+
+        // Render initial conversation
+        renderConversation();
+    </script>
+  </body>
+</html>
