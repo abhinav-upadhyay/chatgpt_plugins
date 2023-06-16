@@ -14,10 +14,10 @@ Full write up for this tutorial available on my substack: [https://codeconfessio
 Creating a plugin in this system requires doing two things. 
 - Extend the PluginInterface class, which defines the API that a plugin should follow
 - Implement the 4 API methods expected by a plugin. These are:
-  - get_name: Returns the name of the plugin
-  - get_description: Provides a description of what the plugin does
-  - get_parameters: Gives a JSON specification of the parameters of the plugin.
-  - execute: This is the meat of the plugin, where it receives the parameters as declared by it in the get_parameters method and it executes its function.
+  - `get_name`: Returns the name of the plugin
+  - `get_description`: Provides a description of what the plugin does
+  - `get_parameters`: Gives a JSON specification of the parameters of the plugin.
+  - `execute`: This is the meat of the plugin, where it receives the parameters as declared by it in the get_parameters method and it executes its function.
 
 Checkout the implmenetation of the [web search plugin](https://github.com/abhinav-upadhyay/chatgpt_plugins/blob/ee8d81ec3729b7cdc5f34b75f51ce44fa93ee18a/app/chat/plugins/websearch.py) for an example.
 
