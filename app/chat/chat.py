@@ -90,7 +90,8 @@ class ChatSession:
         print(f"Executing plugin {func_name}")
         if func_name in self.plugins:
             arguments = json.loads(func_call.get("arguments"))
-            plugin_response = self.plugins[func_name].execute(**arguments)
+            plugin = self.plugins[func_name]
+            plugin_response = plugin.execute(**arguments)
         else:
             plugin_response = {"error": f"No plugin found with name {func_call}"}
 
