@@ -49,7 +49,6 @@ class WebSearchPlugin(PluginInterface):
             "Accept": "application/json",
             "X-Subscription-Token": BRAVE_API_KEY
         }
-        import pdb; pdb.set_trace()
 
         params = {
             "q": kwargs["q"]

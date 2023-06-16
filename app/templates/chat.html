@@ -74,6 +74,13 @@
         const messageInput = document.getElementById("messageInput");
         const sendButton = document.getElementById("sendButton");
 
+        function translateRole(role) {
+          if (role == "user") {
+            return "You";
+          }
+          return "ChatGPT";
+        }
+
         function renderMessage(sender, message) {
           const listItem = document.createElement('li');
           const senderName = document.createElement('div');
@@ -94,7 +101,7 @@
             const listItem = document.createElement("li");
             const senderName = document.createElement("div");
             senderName.className = "sender-name";
-            senderName.innerText = item.role;
+            senderName.innerText = translateRole(item.role);
 
             const messageContent = document.createElement("div");
             messageContent.className = "message-content";

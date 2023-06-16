@@ -21,8 +21,9 @@ class PythonInterpreterPlugin(PluginInterface):
 
     def get_parameters(self) -> Dict:
         """
-        Return the list of parameters to execute this plugin in the form of
-        JSON schema as specified in the OpenAI documentation:
+        Return the list of parameters to execute this plugin in
+        the form of JSON schema as specified in the
+        OpenAI documentation:
         https://platform.openai.com/docs/api-reference/chat/create#chat/create-parameters
         """
         parameters = {

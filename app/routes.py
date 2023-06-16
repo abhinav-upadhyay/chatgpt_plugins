@@ -20,7 +20,6 @@ def index():
 
 @app.route('/chat', methods=['POST'])
 def chat():
-    import pdb; pdb.set_trace()
     message: str = request.json['message']
     chat_session = _get_user_session()
     chatgpt_message = chat_session.get_chatgpt_response(message)
