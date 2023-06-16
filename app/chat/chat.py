@@ -87,6 +87,7 @@ class ChatSession:
         If a plugin exists for the given function call, execute it.
         """
         func_name = func_call.get("name")
+        print(f"Executing plugin {func_name}")
         if func_name in self.plugins:
             arguments = json.loads(func_call.get("arguments"))
             plugin_response = self.plugins[func_name].execute(**arguments)
@@ -98,6 +99,7 @@ class ChatSession:
         # need to append the plugin response into the conversation
         # history. However, this is just temporary so we make a
         # copy of the messages and then append to that copy.
+        print(f"Response from plugin {func_name}: {plugin_response}")
         messages = list(self.conversation.conversation_history)
         messages.append({"role": "function",
                          "content": json.dumps(plugin_response),
