@@ -19,7 +19,10 @@ Creating a plugin in this system requires doing two things.
   - `get_parameters`: Gives a JSON specification of the parameters of the plugin.
   - `execute`: This is the meat of the plugin, where it receives the parameters as declared by it in the get_parameters method and it executes its function.
 
-Checkout the implmenetation of the [web search plugin](https://github.com/abhinav-upadhyay/chatgpt_plugins/blob/ee8d81ec3729b7cdc5f34b75f51ce44fa93ee18a/app/chat/plugins/websearch.py) for an example.
+### Implemented Plugins
+- [Web search plugin](https://github.com/abhinav-upadhyay/chatgpt_plugins/blob/main/app/chat/plugins/websearch.py)
+- [Python code interpreter plugin](https://github.com/abhinav-upadhyay/chatgpt_plugins/blob/main/app/chat/plugins/pythoninterpreter.py)
+- [Web scraper plugin](https://github.com/abhinav-upadhyay/chatgpt_plugins/blob/main/app/chat/plugins/webscraper.py)
 
 
 ## Setup Requirements for Running This Locally
