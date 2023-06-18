@@ -54,21 +54,35 @@
         border-radius: 4px;
         cursor: pointer;
       }
+
+      .throbber {
+        display: none;
+        width: 16px;
+        height: 16px;
+        margin-left: 5px;
+        background-image: url("{{url_for('static', filename='img/throbber.gif')}}");
+        background-size: contain;
+      }
     </style>
   </head>
   <body>
     <div class="chat-container">
-      <h2>Chat App</h2>
+      <!-- <h2>My ChatGPT</h2> -->
       <ul class="message-list" id="messageList"></ul>
       <div class="input-box">
-        <input type="text" id="messageInput" placeholder="Type your message" />
+        <textarea
+          id="messageInput"
+          placeholder="Type your message"
+          rows="3"
+          cols="100"
+        ></textarea>
         <input type="submit" value="Send" id="sendButton" />
+        <span class="throbber" id="throbber"></span>
       </div>
     </div>
 
     <script>
         const conversationData = {{ conversation|tojson}};
-        console.log(conversationData)
 
         const messageList = document.getElementById("messageList");
         const messageInput = document.getElementById("messageInput");
@@ -113,14 +127,25 @@
           });
         }
 
+        const throbber = document.getElementById("throbber");
+
+        function showThrobber() {
+          throbber.style.display = "inline-block";
+        }
+
+        function hideThrobber() {
+          throbber.style.display = "none";
+        }
+
         // Handle message submission
         function submitMessage() {
         const message = messageInput.value.trim();
         if (message !== '') {
           renderMessage('You', message);
           messageInput.value = '';
+          showThrobber(); // Show the throbber before making the API call
 
-          // Simulate backend API call
+
           fetch('/chat', {
             method: 'POST',
             headers: {
@@ -135,7 +160,11 @@
             })
             .catch(error => {
               console.error('Error:', error);
+            })
+            .finally(() => {
+              hideThrobber();
             });
+
         }
       }
 
