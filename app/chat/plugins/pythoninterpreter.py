@@ -43,7 +43,6 @@ class PythonInterpreterPlugin(PluginInterface):
         The parameters are passed in the form of kwargs
         """
         output = StringIO()
-        # import pdb; pdb.set_trace()
 
         try:
             global_namespace = {}
@@ -52,7 +51,7 @@ class PythonInterpreterPlugin(PluginInterface):
             exec(kwargs['code'], local_namespace, global_namespace)
             result = output.getvalue()
             if not result:
-                return {'error': 'Not result written to stdout. Please print result on stdout'}
+                return {'error': 'No result written to stdout. Please print result on stdout'}
             return {"result": result}
         except Exception:
             error = traceback.format_exc()
